@@ -414,9 +414,92 @@
     border-top: 1px solid rgba(74,140,92,0.15);
     margin: 0 20px;
   }
+
+  /* LOCKSCREEN */
+  #lockscreen {
+    position: fixed;
+    inset: 0;
+    background: #1a3a2a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    padding: 32px;
+  }
+  #lockscreen h2 {
+    font-family: 'Playfair Display', serif;
+    color: #a8d8ea;
+    font-size: 36px;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+  #lockscreen .lock-sub {
+    color: rgba(255,255,255,0.45);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    margin-bottom: 36px;
+    text-align: center;
+  }
+  #lockscreen input {
+    width: 100%;
+    max-width: 280px;
+    padding: 14px 20px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.08);
+    color: white;
+    font-size: 16px;
+    font-family: 'DM Sans', sans-serif;
+    text-align: center;
+    letter-spacing: 2px;
+    outline: none;
+    margin-bottom: 12px;
+  }
+  #lockscreen input::placeholder { color: rgba(255,255,255,0.3); letter-spacing: 1px; }
+  #lockscreen button {
+    width: 100%;
+    max-width: 280px;
+    padding: 14px;
+    border-radius: 12px;
+    border: none;
+    background: #c9a84c;
+    color: white;
+    font-size: 15px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    letter-spacing: 0.5px;
+  }
+  #lockscreen button:hover { opacity: 0.85; }
+  #lock-error {
+    color: #ff8a80;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    margin-top: 12px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    min-height: 20px;
+  }
+  #lock-error.visible { opacity: 1; }
+  #main-content { display: none; }
+
 </style>
 </head>
 <body>
+
+<!-- LOCKSCREEN -->
+<div id="lockscreen">
+  <h2>Iguazú 🌿</h2>
+  <p class="lock-sub">Ingresá la contraseña para ver el itinerario</p>
+  <input type="password" id="pass-input" placeholder="contraseña" onkeydown="if(event.key==='Enter') checkPass()" autofocus />
+  <button onclick="checkPass()">Ver itinerario →</button>
+  <div id="lock-error">Contraseña incorrecta, intentá de nuevo</div>
+</div>
+
+<div id="main-content">
+
 
 <!-- HERO -->
 <div class="hero">
@@ -436,37 +519,37 @@
   <p class="section-label">🎟 Comprar antes de viajar</p>
   <div class="tickets-grid">
 
-    <div class="ticket-row">
+    <div class="ticket-row" style="border-left-color: #4caf50;">
       <div class="t-left">
         <span class="ticket-emoji">🇦🇷</span>
         <div>
           <div class="ticket-name">Parque Nacional Iguazú (arg)</div>
-          <div class="ticket-note">Elegir franja 8:00 hs — domingo 22</div>
+          <div class="ticket-note">✅ Comprado — domingo 22, franja 8:00 hs</div>
         </div>
       </div>
-      <a href="https://ventaweb.apn.gob.ar" target="_blank">Comprar →</a>
+      <a href="https://danielalejandroordoqui-bot.github.io/iguazu-2026/tickets_parque_argentino.pdf" target="_blank">Ver QR →</a>
     </div>
 
-    <div class="ticket-row">
+    <div class="ticket-row" style="border-left-color: #4caf50;">
       <div class="t-left">
         <span class="ticket-emoji">🇧🇷</span>
         <div>
           <div class="ticket-name">Cataratas lado brasileño</div>
-          <div class="ticket-note">Para el lunes 23</div>
+          <div class="ticket-note">✅ Comprado — lunes 23</div>
         </div>
       </div>
-      <a href="https://cataratasdoiguacu.com.br" target="_blank">Comprar →</a>
+      <a href="https://danielalejandroordoqui-bot.github.io/iguazu-2026/parque%20iguazu%20brasil.pdf" target="_blank">Ver QR →</a>
     </div>
 
-    <div class="ticket-row">
+    <div class="ticket-row" style="border-left-color: #4caf50;">
       <div class="t-left">
         <span class="ticket-emoji">🦜</span>
         <div>
           <div class="ticket-name">Parque das Aves</div>
-          <div class="ticket-note">Para el lunes 23</div>
+          <div class="ticket-note">✅ Comprado — lunes 23</div>
         </div>
       </div>
-      <a href="https://www.parquedasaves.com.br/visite/tarifas" target="_blank">Comprar →</a>
+      <a href="https://danielalejandroordoqui-bot.github.io/iguazu-2026/parque%20das%20aves.pdf" target="_blank">Ver QR →</a>
     </div>
 
     <div class="ticket-row" style="border-left-color: var(--dorado);">
@@ -474,10 +557,10 @@
         <span class="ticket-emoji">🐆</span>
         <div>
           <div class="ticket-name">Güira Oga</div>
-          <div class="ticket-note">Reservar por WhatsApp: +54 9 3757 534246</div>
+          <div class="ticket-note">Se paga en el lugar — llegar antes de las 16:30</div>
         </div>
       </div>
-      <a href="https://wa.me/5493757534246" target="_blank">WhatsApp →</a>
+      <span style="font-size:12px;color:#aaa;">En puerta</span>
     </div>
 
     <div class="ticket-row" style="border-left-color: var(--agua);">
@@ -485,7 +568,7 @@
         <span class="ticket-emoji">🚤</span>
         <div>
           <div class="ticket-name">Gran Aventura</div>
-          <div class="ticket-note">Comprar en boletería Iguazú Jungle al entrar al parque</div>
+          <div class="ticket-note">Se compra en boletería Iguazú Jungle al entrar al parque</div>
         </div>
       </div>
       <span style="font-size:12px;color:#aaa;">En el parque</span>
@@ -819,6 +902,23 @@
 <div class="footer">
   Cataratas del Iguazú · <span>Marzo 2026</span> · Hotel Carmen
 </div>
+
+</div><!-- end main-content -->
+
+<script>
+  function checkPass() {
+    var val = document.getElementById('pass-input').value;
+    var err = document.getElementById('lock-error');
+    if (val === 'cheekyteamo') {
+      document.getElementById('lockscreen').style.display = 'none';
+      document.getElementById('main-content').style.display = 'block';
+    } else {
+      err.classList.add('visible');
+      document.getElementById('pass-input').value = '';
+      setTimeout(function(){ err.classList.remove('visible'); }, 3000);
+    }
+  }
+</script>
 
 </body>
 </html>
