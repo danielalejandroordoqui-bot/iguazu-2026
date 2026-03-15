@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Iguazú — Marzo 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --verde: #1a3a2a;
+    --verde-medio: #2d5a3d;
+    --verde-claro: #4a8c5c;
+    --agua: #5ba8c4;
+    --agua-claro: #a8d8ea;
+    --crema: #f5f0e8;
+    --dorado: #c9a84c;
+    --texto: #1a2518;
+    --blanco: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: var(--crema);
+    color: var(--texto);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--verde);
+    position: relative;
+    overflow: hidden;
+    padding: 60px 32px 48px;
+    text-align: center;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 120px;
+    background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(91,168,196,0.25) 0%, transparent 70%);
+  }
+
+  .hero-tag {
+    display: inline-block;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--dorado);
+    border: 1px solid var(--dorado);
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.2s;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(42px, 10vw, 72px);
+    color: var(--blanco);
+    line-height: 1.05;
+    letter-spacing: -1px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.4s;
+  }
+
+  .hero h1 em {
+    color: var(--agua-claro);
+    font-style: italic;
+  }
+
+  .hero-sub {
+    margin-top: 16px;
+    font-size: 15px;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 0.5px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.6s;
+  }
+
+  .hero-dates {
+    margin-top: 28px;
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.8s;
+  }
+
+  .hero-dates span {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.85);
+    font-size: 13px;
+    padding: 6px 16px;
+    border-radius: 20px;
+  }
+
+  .hero-wave {
+    position: absolute;
+    bottom: -2px; left: 0; right: 0;
+    height: 40px;
+    background: var(--crema);
+    clip-path: ellipse(55% 100% at 50% 100%);
+  }
+
+  /* TICKETS SECTION */
+  .section {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .tickets-section {
+    padding: 48px 20px 0;
+    max-width: 640px;
+    margin: 0 auto;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 1s;
+  }
+
+  .section-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--verde-claro);
+    margin-bottom: 16px;
+  }
+
+  .tickets-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .ticket-row {
+    background: white;
+    border-radius: 12px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    border-left: 3px solid var(--verde-claro);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+
+  .ticket-row .t-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+  }
+
+  .ticket-emoji { font-size: 18px; flex-shrink: 0; }
+
+  .ticket-name {
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--texto);
+  }
+
+  .ticket-row a {
+    font-size: 12px;
+    color: var(--agua);
+    text-decoration: none;
+    font-weight: 500;
+    white-space: nowrap;
+    border-bottom: 1px solid var(--agua-claro);
+    padding-bottom: 1px;
+    transition: color 0.2s;
+  }
+
+  .ticket-row a:hover { color: var(--verde-medio); }
+
+  .ticket-note {
+    font-size: 11.5px;
+    color: #888;
+    margin-top: 3px;
+    font-weight: 300;
+  }
+
+  /* DAY BLOCKS */
+  .days {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 40px 20px 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .day-block {
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards;
+  }
+  .day-block:nth-child(1) { animation-delay: 1.1s; }
+  .day-block:nth-child(2) { animation-delay: 1.25s; }
+  .day-block:nth-child(3) { animation-delay: 1.4s; }
+  .day-block:nth-child(4) { animation-delay: 1.55s; }
+
+  .day-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+
+  .day-flag {
+    font-size: 22px;
+    line-height: 1;
+  }
+
+  .day-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--verde);
+    line-height: 1.1;
+  }
+
+  .day-subtitle {
+    font-size: 12px;
+    color: #888;
+    font-weight: 400;
+    margin-top: 2px;
+    letter-spacing: 0.3px;
+  }
+
+  .day-pill {
+    margin-left: auto;
+    background: var(--verde);
+    color: white;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 4px 12px;
+    border-radius: 20px;
+    white-space: nowrap;
+    letter-spacing: 0.3px;
+  }
+
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+    padding-left: 16px;
+    border-left: 2px solid rgba(74,140,92,0.2);
+  }
+
+  .tl-item {
+    display: flex;
+    gap: 16px;
+    padding: 10px 0;
+    position: relative;
+  }
+
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -21px;
+    top: 17px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--verde-claro);
+    border: 2px solid var(--crema);
+  }
+
+  .tl-item.highlight::before {
+    background: var(--dorado);
+    width: 10px;
+    height: 10px;
+    left: -22px;
+    top: 16px;
+  }
+
+  .tl-time {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--verde-claro);
+    min-width: 54px;
+    padding-top: 1px;
+    letter-spacing: 0.3px;
+    flex-shrink: 0;
+  }
+
+  .tl-content {
+    flex: 1;
+  }
+
+  .tl-main {
+    font-size: 14px;
+    color: var(--texto);
+    font-weight: 400;
+    line-height: 1.45;
+  }
+
+  .tl-main strong {
+    font-weight: 500;
+  }
+
+  .tl-detail {
+    font-size: 12px;
+    color: #888;
+    margin-top: 3px;
+    line-height: 1.4;
+    font-weight: 300;
+  }
+
+  .star-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--dorado), #e8c060);
+    color: white;
+    font-size: 10px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-left: 6px;
+    vertical-align: middle;
+    letter-spacing: 0.5px;
+  }
+
+  /* LLEVAR SECTION */
+  .llevar-section {
+    max-width: 640px;
+    margin: 0 auto 60px;
+    padding: 0 20px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 1.7s;
+  }
+
+  .llevar-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  @media (max-width: 480px) {
+    .llevar-grid { grid-template-columns: 1fr; }
+  }
+
+  .llevar-card {
+    background: var(--verde);
+    border-radius: 16px;
+    padding: 20px;
+    color: white;
+  }
+
+  .llevar-card h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 12px;
+    color: var(--agua-claro);
+  }
+
+  .llevar-card ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .llevar-card li {
+    font-size: 13px;
+    color: rgba(255,255,255,0.8);
+    padding-left: 14px;
+    position: relative;
+    line-height: 1.4;
+  }
+
+  .llevar-card li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--dorado);
+    font-size: 11px;
+  }
+
+  /* FOOTER */
+  .footer {
+    background: var(--verde);
+    text-align: center;
+    padding: 28px 20px;
+    color: rgba(255,255,255,0.4);
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+
+  .footer span {
+    color: var(--dorado);
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* DIVIDER */
+  .divider {
+    border: none;
+    border-top: 1px solid rgba(74,140,92,0.15);
+    margin: 0 20px;
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">✈ Viaje confirmado</div>
+  <h1>Cataratas<br>del <em>Iguazú</em></h1>
+  <p class="hero-sub">Hotel Carmen · Ruta 12, Km 4.5</p>
+  <div class="hero-dates">
+    <span>Sáb 21 marzo</span>
+    <span>→</span>
+    <span>Mar 24 marzo 2026</span>
+  </div>
+  <div class="hero-wave"></div>
+</div>
+
+<!-- TICKETS -->
+<div class="tickets-section">
+  <p class="section-label">🎟 Comprar antes de viajar</p>
+  <div class="tickets-grid">
+
+    <div class="ticket-row">
+      <div class="t-left">
+        <span class="ticket-emoji">🇦🇷</span>
+        <div>
+          <div class="ticket-name">Parque Nacional Iguazú (arg)</div>
+          <div class="ticket-note">Elegir franja 8:00 hs — domingo 22</div>
+        </div>
+      </div>
+      <a href="https://ventaweb.apn.gob.ar" target="_blank">Comprar →</a>
+    </div>
+
+    <div class="ticket-row">
+      <div class="t-left">
+        <span class="ticket-emoji">🇧🇷</span>
+        <div>
+          <div class="ticket-name">Cataratas lado brasileño</div>
+          <div class="ticket-note">Para el lunes 23</div>
+        </div>
+      </div>
+      <a href="https://cataratasdoiguacu.com.br" target="_blank">Comprar →</a>
+    </div>
+
+    <div class="ticket-row">
+      <div class="t-left">
+        <span class="ticket-emoji">🦜</span>
+        <div>
+          <div class="ticket-name">Parque das Aves</div>
+          <div class="ticket-note">Para el lunes 23</div>
+        </div>
+      </div>
+      <a href="https://www.parquedasaves.com.br/visite/tarifas" target="_blank">Comprar →</a>
+    </div>
+
+    <div class="ticket-row" style="border-left-color: var(--dorado);">
+      <div class="t-left">
+        <span class="ticket-emoji">🐆</span>
+        <div>
+          <div class="ticket-name">Güira Oga</div>
+          <div class="ticket-note">Reservar por WhatsApp: +54 9 3757 534246</div>
+        </div>
+      </div>
+      <a href="https://wa.me/5493757534246" target="_blank">WhatsApp →</a>
+    </div>
+
+    <div class="ticket-row" style="border-left-color: var(--agua);">
+      <div class="t-left">
+        <span class="ticket-emoji">🚤</span>
+        <div>
+          <div class="ticket-name">Gran Aventura</div>
+          <div class="ticket-note">Comprar en boletería Iguazú Jungle al entrar al parque</div>
+        </div>
+      </div>
+      <span style="font-size:12px;color:#aaa;">En el parque</span>
+    </div>
+
+  </div>
+</div>
+
+<div class="days">
+
+  <!-- DIA 1 -->
+  <div class="day-block">
+    <div class="day-header">
+      <span class="day-flag">🛫</span>
+      <div>
+        <div class="day-title">Sábado 21</div>
+        <div class="day-subtitle">Salida desde Buenos Aires</div>
+      </div>
+      <div class="day-pill">Día 1</div>
+    </div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-time">16:30</div>
+        <div class="tl-content">
+          <div class="tl-main">Salida hacia <strong>Ezeiza (EZE)</strong></div>
+        </div>
+      </div>
+      <div class="tl-item highlight">
+        <div class="tl-time">18:30</div>
+        <div class="tl-content">
+          <div class="tl-main">✈️ Vuelo <strong>Ezeiza → IGR</strong></div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">~20:00</div>
+        <div class="tl-content">
+          <div class="tl-main">Llegada aeropuerto IGR</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">20:20</div>
+        <div class="tl-content">
+          <div class="tl-main">Remis al <strong>Hotel Carmen</strong></div>
+          <div class="tl-detail">~20 min por Ruta 12</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">21:00</div>
+        <div class="tl-content">
+          <div class="tl-main">🏨 Check-in Hotel Carmen</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">21:30</div>
+        <div class="tl-content">
+          <div class="tl-main">🍽 Cena en el restaurante del hotel</div>
+          <div class="tl-detail">Llegada tarde, no conviene ir al centro</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">23:00</div>
+        <div class="tl-content">
+          <div class="tl-main">Descanso 💤</div>
+          <div class="tl-detail">Mañana hay que madrugar</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- DIA 2 -->
+  <div class="day-block">
+    <div class="day-header">
+      <span class="day-flag">🇦🇷</span>
+      <div>
+        <div class="day-title">Domingo 22</div>
+        <div class="day-subtitle">Parque Nacional Iguazú — lado argentino</div>
+      </div>
+      <div class="day-pill">Día 2</div>
+    </div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-time">7:00</div>
+        <div class="tl-content">
+          <div class="tl-main">Desayuno buffet en el hotel <span style="color:#aaa;font-size:12px;">(incluido)</span></div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">7:30</div>
+        <div class="tl-content">
+          <div class="tl-main">Salida al parque</div>
+          <div class="tl-detail">Remis/taxi o colectivo El Práctico desde la puerta del hotel</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">8:00</div>
+        <div class="tl-content">
+          <div class="tl-main">🎟 Entrada al Parque Nacional</div>
+          <div class="tl-detail">Al entrar: boletería Iguazú Jungle → comprar Gran Aventura para las 15:30</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">8:15</div>
+        <div class="tl-content">
+          <div class="tl-main">Directo a estación Central → primer tren</div>
+          <div class="tl-detail">Destino: Garganta del Diablo (el truco para evitar filas)</div>
+        </div>
+      </div>
+      <div class="tl-item highlight">
+        <div class="tl-time">8:30</div>
+        <div class="tl-content">
+          <div class="tl-main">⭐ <strong>Garganta del Diablo</strong> <span class="star-badge">No te lo pierdas</span></div>
+          <div class="tl-detail">Parque casi vacío · posibles arcoíris con sol bajo · 1,1 km de pasarela ida y vuelta sobre el río · 📷 mejor momento para la cámara</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">10:00</div>
+        <div class="tl-content">
+          <div class="tl-main">Tren de vuelta → bajar en <strong>estación Cataratas</strong></div>
+          <div class="tl-detail">(no en la central — ahorrás caminar)</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">10:15</div>
+        <div class="tl-content">
+          <div class="tl-main"><strong>Circuito Superior</strong></div>
+          <div class="tl-detail">Vistas desde arriba, pasarelas sobre la selva</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">11:30</div>
+        <div class="tl-content">
+          <div class="tl-main">🍽 Almuerzo en el parque</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">13:00</div>
+        <div class="tl-content">
+          <div class="tl-main"><strong>Circuito Inferior</strong></div>
+          <div class="tl-detail">El más húmedo, vistas frontales. Se deja para el final a propósito</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">15:15</div>
+        <div class="tl-content">
+          <div class="tl-main">Dejar cámara y mochila en <strong>guardería</strong></div>
+          <div class="tl-detail">Cerca del área de embarque</div>
+        </div>
+      </div>
+      <div class="tl-item highlight">
+        <div class="tl-time">15:30</div>
+        <div class="tl-content">
+          <div class="tl-main">🚤 <strong>Gran Aventura</strong></div>
+          <div class="tl-detail">Safari en jeep por la selva + lancha hasta el pie de los saltos · te empaparán completamente</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">17:00</div>
+        <div class="tl-content">
+          <div class="tl-main">Regreso desde el <strong>puerto de Puerto Iguazú</strong></div>
+          <div class="tl-detail">Coordinar remis para que los busque ahí (el paseo finaliza en el puerto, no en el parque)</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">19:00</div>
+        <div class="tl-content">
+          <div class="tl-main">Ducha y descanso en el hotel 🏨</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">20:30</div>
+        <div class="tl-content">
+          <div class="tl-main">🍽 Cena</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- DIA 3 -->
+  <div class="day-block">
+    <div class="day-header">
+      <span class="day-flag">🇧🇷</span>
+      <div>
+        <div class="day-title">Lunes 23</div>
+        <div class="day-subtitle">Brasil + Güira Oga</div>
+      </div>
+      <div class="day-pill">Día 3</div>
+    </div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-time">7:00</div>
+        <div class="tl-content">
+          <div class="tl-main">Desayuno buffet en el hotel <span style="color:#aaa;font-size:12px;">(incluido)</span></div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">7:30</div>
+        <div class="tl-content">
+          <div class="tl-main">Salida en <strong>remis privado</strong> para el día completo</div>
+          <div class="tl-detail">~USD 60–80 la pareja · llevar DNI para cruzar la frontera · llevar reales o tarjeta internacional</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">8:30</div>
+        <div class="tl-content">
+          <div class="tl-main">🦜 <strong>Parque das Aves</strong>, Foz do Iguaçu</div>
+          <div class="tl-detail">Llegada cuando abre · tucanes, guacamayos, flamencos en aviarios de inmersión · duración ~1h30–2hs</div>
+        </div>
+      </div>
+      <div class="tl-item highlight">
+        <div class="tl-time">10:30</div>
+        <div class="tl-content">
+          <div class="tl-main">🌊 <strong>Cataratas lado brasileño</strong> <span class="star-badge">La mejor foto</span></div>
+          <div class="tl-detail">La vista panorámica de toda la garganta · duración ~2–2:30hs</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">13:00</div>
+        <div class="tl-content">
+          <div class="tl-main">🍽 Almuerzo en Foz do Iguaçu</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">14:30</div>
+        <div class="tl-content">
+          <div class="tl-main">Regreso a Puerto Iguazú en el remis</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">15:30</div>
+        <div class="tl-content">
+          <div class="tl-main">🏨 Llegada al hotel — dejar cosas, cambio rápido</div>
+        </div>
+      </div>
+      <div class="tl-item highlight">
+        <div class="tl-time">16:00</div>
+        <div class="tl-content">
+          <div class="tl-main">🐆 <strong>Güira Oga</strong></div>
+          <div class="tl-detail">A 2 minutos del hotel a pie · último ingreso 16:30 sin excepciones · recorrido en tractor + caminata guiada ~1h30 · yacarés, monos aulladores, tucanes, yaguaretés</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">17:30</div>
+        <div class="tl-content">
+          <div class="tl-main">Regreso al hotel caminando 🚶</div>
+        </div>
+      </div>
+      <div class="tl-item highlight">
+        <div class="tl-time">20:00</div>
+        <div class="tl-content">
+          <div class="tl-main">🍾 <strong>Cena de festejo</strong> — última noche</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- DIA 4 -->
+  <div class="day-block">
+    <div class="day-header">
+      <span class="day-flag">🛬</span>
+      <div>
+        <div class="day-title">Martes 24</div>
+        <div class="day-subtitle">Regreso a Buenos Aires</div>
+      </div>
+      <div class="day-pill">Día 4</div>
+    </div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-time">8:00</div>
+        <div class="tl-content">
+          <div class="tl-main">Desayuno buffet en el hotel <span style="color:#aaa;font-size:12px;">(incluido)</span></div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">9:00</div>
+        <div class="tl-content">
+          <div class="tl-main">🏨 Check-out</div>
+          <div class="tl-detail">Coordinar remis la noche anterior</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">9:15</div>
+        <div class="tl-content">
+          <div class="tl-main">Remis al aeropuerto IGR</div>
+          <div class="tl-detail">~20 minutos por Ruta 12</div>
+        </div>
+      </div>
+      <div class="tl-item highlight">
+        <div class="tl-time">10:30</div>
+        <div class="tl-content">
+          <div class="tl-main">✈️ Vuelo <strong>IGR → Aeroparque (AEP)</strong></div>
+          <div class="tl-detail">Hasta la próxima 💚</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- QUE LLEVAR -->
+<div class="llevar-section">
+  <p class="section-label">🎒 Qué llevar</p>
+  <div class="llevar-grid">
+    <div class="llevar-card">
+      <h4>Domingo — Parque Arg.</h4>
+      <ul>
+        <li>Ropa que no importe mojar + muda seca en bolsa hermética</li>
+        <li>Cámara + funda impermeable o zip-lock + paño microfibra</li>
+        <li>Repelente y protector solar</li>
+        <li>Agua y snacks</li>
+      </ul>
+    </div>
+    <div class="llevar-card">
+      <h4>Lunes — Brasil + Güira Oga</h4>
+      <ul>
+        <li>DNI o pasaporte</li>
+        <li>Reales o tarjeta internacional</li>
+        <li>Repelente (especialmente para Güira Oga)</li>
+        <li>Ropa cómoda y liviana</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  Cataratas del Iguazú · <span>Marzo 2026</span> · Hotel Carmen
+</div>
+
+</body>
+</html>
